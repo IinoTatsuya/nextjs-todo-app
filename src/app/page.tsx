@@ -1,13 +1,9 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle, Plus, BarChart3, Clock, ArrowRight } from 'lucide-react'
 
 export default function Home() {
-  const router = useRouter()
-
   const features = [
     {
       icon: <Plus className="w-8 h-8" />,
@@ -46,12 +42,14 @@ export default function Home() {
             上記の技術スタックを使用したタスク管理アプリケーションです。
           </p>
           <Button
-            onClick={() => router.push('/dashboard')}
+            asChild
             size="lg"
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200"
           >
-            Get Started
-            <ArrowRight className="ml-2 w-5 h-5" />
+            <Link href="/dashboard">
+              Get Started
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
           </Button>
         </div>
 
@@ -87,19 +85,19 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              onClick={() => router.push('/dashboard')}
+              asChild
               size="lg"
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >
-              View Dashboard
+              <Link href="/dashboard">View Dashboard</Link>
             </Button>
             <Button
-              onClick={() => router.push('/dashboard/new')}
+              asChild
               size="lg"
               variant="outline"
               className="hover:bg-blue-50"
             >
-              Create Your First Task
+              <Link href="/dashboard/new">Create Your First Task</Link>
             </Button>
           </div>
         </div>
