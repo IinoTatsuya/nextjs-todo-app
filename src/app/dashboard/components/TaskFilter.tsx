@@ -25,7 +25,7 @@ export function TaskFilter({
     {
       key: 'inProgress',
       label: 'In Progress',
-      count: taskCounts['inProgress'],
+      count: taskCounts.inProgress,
     },
     { key: 'completed', label: 'Completed', count: taskCounts.completed },
   ]
