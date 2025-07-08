@@ -48,7 +48,7 @@ export default function TaskDetailPage() {
     title: '',
     description: '',
     dueDate: '',
-    status: 'pending' as TaskStatus,
+    status: 'todo' as TaskStatus,
   })
 
   useEffect(() => {
@@ -226,10 +226,10 @@ export default function TaskDetailPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="pending">
+                        <SelectItem value="todo">
                           <div className="flex items-center space-x-2">
                             <span>⏳</span>
-                            <span>Pending</span>
+                            <span>Todo</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="in-progress">

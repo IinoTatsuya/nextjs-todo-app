@@ -26,7 +26,7 @@ export default function NewTaskPage() {
     title: '',
     description: '',
     dueDate: '',
-    status: 'pending' as TaskStatus,
+    status: 'todo' as TaskStatus,
   })
 
   const handleCreate = async () => {
@@ -169,10 +169,10 @@ export default function NewTaskPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="pending">
+                        <SelectItem value="todo">
                           <div className="flex items-center space-x-2">
                             <span>⏳</span>
-                            <span>Pending</span>
+                            <span>Todo</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="in-progress">

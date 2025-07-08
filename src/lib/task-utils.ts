@@ -2,7 +2,7 @@ import { Task, TaskStatus } from '@/types/task'
 
 export const getStatusColor = (status: TaskStatus): string => {
   switch (status) {
-    case 'pending':
+    case 'todo':
       return 'bg-yellow-100 text-yellow-800 border-yellow-200'
     case 'in-progress':
       return 'bg-blue-100 text-blue-800 border-blue-200'
@@ -15,7 +15,7 @@ export const getStatusColor = (status: TaskStatus): string => {
 
 export const getStatusIcon = (status: TaskStatus): string => {
   switch (status) {
-    case 'pending':
+    case 'todo':
       return '⏳'
     case 'in-progress':
       return '🔄'
@@ -28,8 +28,8 @@ export const getStatusIcon = (status: TaskStatus): string => {
 
 export const getStatusLabel = (status: TaskStatus): string => {
   switch (status) {
-    case 'pending':
-      return 'Pending'
+    case 'todo':
+      return 'Todo'
     case 'in-progress':
       return 'In Progress'
     case 'completed':
@@ -54,8 +54,8 @@ export const isOverdue = (dueDate?: Date): boolean => {
 
 export const filterTasks = (tasks: Task[], filter: string): Task[] => {
   switch (filter) {
-    case 'pending':
-      return tasks.filter((task) => task.status === 'pending')
+    case 'todo':
+      return tasks.filter((task) => task.status === 'todo')
     case 'in-progress':
       return tasks.filter((task) => task.status === 'in-progress')
     case 'completed':

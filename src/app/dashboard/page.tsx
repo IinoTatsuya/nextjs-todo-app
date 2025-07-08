@@ -35,7 +35,7 @@ export default function Dashboard() {
   const taskCounts = useMemo(
     () => ({
       all: tasks.length,
-      pending: tasks.filter((t) => t.status === 'pending').length,
+      todo: tasks.filter((t) => t.status === 'todo').length,
       'in-progress': tasks.filter((t) => t.status === 'in-progress').length,
       completed: tasks.filter((t) => t.status === 'completed').length,
     }),
@@ -165,9 +165,9 @@ export default function Dashboard() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-yellow-600">
-                  {taskCounts.pending}
+                  {taskCounts.todo}
                 </div>
-                <div className="text-sm text-gray-600">Pending</div>
+                <div className="text-sm text-gray-600">Todo</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-blue-600">

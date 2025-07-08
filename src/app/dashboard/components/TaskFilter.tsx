@@ -8,7 +8,7 @@ interface TaskFilterProps {
   onFilterChange: (filter: string) => void
   taskCounts: {
     all: number
-    pending: number
+    todo: number
     'in-progress': number
     completed: number
   }
@@ -21,7 +21,7 @@ export function TaskFilter({
 }: TaskFilterProps) {
   const filters = [
     { key: 'all', label: 'All Tasks', count: taskCounts.all },
-    { key: 'pending', label: 'Pending', count: taskCounts.pending },
+    { key: 'todo', label: 'Todo', count: taskCounts.todo },
     {
       key: 'in-progress',
       label: 'In Progress',

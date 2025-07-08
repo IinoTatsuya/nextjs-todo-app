@@ -18,7 +18,7 @@ export const mockTasks: Task[] = [
     description:
       'Implement secure user authentication with JWT tokens and refresh token rotation.',
     dueDate: new Date('2025-01-20'),
-    status: 'pending',
+    status: 'todo',
     createdAt: new Date('2025-01-02'),
     updatedAt: new Date('2025-01-02'),
   },
@@ -38,7 +38,7 @@ export const mockTasks: Task[] = [
     description:
       'Comprehensive testing of mobile application across different devices and OS versions.',
     dueDate: new Date('2025-01-25'),
-    status: 'pending',
+    status: 'todo',
     createdAt: new Date('2025-01-03'),
     updatedAt: new Date('2025-01-03'),
   },
