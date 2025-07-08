@@ -5,7 +5,7 @@ const schema = a.schema({
     .model({
       title: a.string().required(),
       description: a.string(),
-      dueDate: a.date(),
+      dueDate: a.datetime(),
       status: a.enum(['todo', 'inProgress', 'completed']),
     })
     .authorization((allow) => [allow.publicApiKey()]),
