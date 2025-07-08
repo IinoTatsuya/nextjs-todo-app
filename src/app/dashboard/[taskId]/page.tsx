@@ -153,9 +153,13 @@ export default function TaskDetailPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Task Details
+                タスクの詳細
               </h1>
-              <p className="text-gray-600">Edit and manage your task</p>
+              <p className="text-gray-600">
+                タスクの詳細を編集して、プロジェクトを管理しましょう。
+                <br />
+                必須項目には「*」が付いています。
+              </p>
             </div>
             <div className="flex items-center space-x-2">
               <Badge className={cn('text-sm', getStatusColor(task.status))}>
@@ -171,12 +175,12 @@ export default function TaskDetailPage() {
             <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <span>Edit Task</span>
+                  <span>タスクを編集する</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title *</Label>
+                  <Label htmlFor="title">タイトル *</Label>
                   <Input
                     id="title"
                     value={formData.title}
@@ -189,7 +193,7 @@ export default function TaskDetailPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">説明</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
@@ -203,7 +207,7 @@ export default function TaskDetailPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="dueDate">Due Date</Label>
+                    <Label htmlFor="dueDate">対応期限</Label>
                     <Input
                       id="dueDate"
                       type="date"
@@ -215,7 +219,7 @@ export default function TaskDetailPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="status">Status</Label>
+                    <Label htmlFor="status">ステータス</Label>
                     <Select
                       value={formData.status}
                       onValueChange={(value: TaskStatus) =>
@@ -254,24 +258,27 @@ export default function TaskDetailPage() {
                     <AlertDialogTrigger asChild>
                       <Button variant="destructive" size="sm">
                         <Trash2 className="w-4 h-4 mr-2" />
-                        Delete Task
+                        タスクの削除
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogTitle>
+                          本当に削除しますか？
+                        </AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete the task.
+                          このタスクを削除すると、元に戻すことはできません。
+                          <br />
+                          削除する前に、必要な情報をバックアップしてください。
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>キャンセル</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={handleDelete}
                           className="bg-red-600 hover:bg-red-700"
                         >
-                          Delete
+                          削除
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -285,12 +292,12 @@ export default function TaskDetailPage() {
                     {isSaving ? (
                       <div className="flex items-center space-x-2">
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        <span>Saving...</span>
+                        <span>保存中...</span>
                       </div>
                     ) : (
                       <>
                         <Save className="w-4 h-4 mr-2" />
-                        Save Changes
+                        変更を保存
                       </>
                     )}
                   </Button>
@@ -303,16 +310,16 @@ export default function TaskDetailPage() {
           <div className="space-y-6">
             <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-lg">Task Information</CardTitle>
+                <CardTitle className="text-lg">タスク情報</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   <Calendar className="w-4 h-4" />
-                  <span>Created: {formatDate(task.createdAt)}</span>
+                  <span>作成日: {formatDate(task.createdAt)}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   <Clock className="w-4 h-4" />
-                  <span>Updated: {formatDate(task.updatedAt)}</span>
+                  <span>更新日: {formatDate(task.updatedAt)}</span>
                 </div>
                 <Separator />
                 <div className="text-sm text-gray-600">
@@ -337,7 +344,7 @@ export default function TaskDetailPage() {
                   }
                   disabled={formData.status === 'inProgress'}
                 >
-                  🔄 Mark as In Progress
+                  🔄 In Progressにする
                 </Button>
                 <Button
                   variant="outline"
@@ -347,7 +354,7 @@ export default function TaskDetailPage() {
                   }
                   disabled={formData.status === 'completed'}
                 >
-                  ✅ Mark as Completed
+                  ✅ 完了にする
                 </Button>
                 <Button
                   variant="outline"
@@ -359,7 +366,7 @@ export default function TaskDetailPage() {
                     })
                   }
                 >
-                  📅 Set Due Date to Today
+                  📅 対応期限を今日にする
                 </Button>
               </CardContent>
             </Card>

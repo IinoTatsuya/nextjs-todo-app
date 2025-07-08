@@ -45,7 +45,7 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
               <Calendar className="w-3 h-3" />
               <span>{formatDate(task.dueDate)}</span>
               {overdue && (
-                <span className="text-red-600 font-medium">Overdue</span>
+                <span className="text-red-600 font-medium">期限切れ</span>
               )}
             </div>
           )}
