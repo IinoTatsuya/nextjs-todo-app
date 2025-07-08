@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col`}
       >
-        {children}
-        <footer className="my-12 text-center text-gray-500 text-sm">
+        <main className="flex-grow">{children}</main>
+        <footer className="mt-12 mb-2 text-center text-gray-500 text-sm">
           © {new Date().getFullYear()} T.iino . All rights reserved.
         </footer>
       </body>
