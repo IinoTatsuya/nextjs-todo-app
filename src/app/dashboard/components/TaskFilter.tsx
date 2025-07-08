@@ -9,7 +9,7 @@ interface TaskFilterProps {
   taskCounts: {
     all: number
     todo: number
-    'in-progress': number
+    inProgress: number
     completed: number
   }
 }
@@ -23,9 +23,9 @@ export function TaskFilter({
     { key: 'all', label: 'All Tasks', count: taskCounts.all },
     { key: 'todo', label: 'Todo', count: taskCounts.todo },
     {
-      key: 'in-progress',
+      key: 'inProgress',
       label: 'In Progress',
-      count: taskCounts['in-progress'],
+      count: taskCounts['inProgress'],
     },
     { key: 'completed', label: 'Completed', count: taskCounts.completed },
   ]

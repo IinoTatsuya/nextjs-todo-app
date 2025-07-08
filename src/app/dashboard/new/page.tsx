@@ -175,7 +175,7 @@ export default function NewTaskPage() {
                             <span>Todo</span>
                           </div>
                         </SelectItem>
-                        <SelectItem value="in-progress">
+                        <SelectItem value="inProgress">
                           <div className="flex items-center space-x-2">
                             <span>🔄</span>
                             <span>In Progress</span>

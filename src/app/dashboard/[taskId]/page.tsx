@@ -232,7 +232,7 @@ export default function TaskDetailPage() {
                             <span>Todo</span>
                           </div>
                         </SelectItem>
-                        <SelectItem value="in-progress">
+                        <SelectItem value="inProgress">
                           <div className="flex items-center space-x-2">
                             <span>🔄</span>
                             <span>In Progress</span>
@@ -333,9 +333,9 @@ export default function TaskDetailPage() {
                   variant="outline"
                   className="w-full justify-start"
                   onClick={() =>
-                    setFormData({ ...formData, status: 'in-progress' })
+                    setFormData({ ...formData, status: 'inProgress' })
                   }
-                  disabled={formData.status === 'in-progress'}
+                  disabled={formData.status === 'inProgress'}
                 >
                   🔄 Mark as In Progress
                 </Button>

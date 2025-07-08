@@ -44,7 +44,7 @@ export default function Dashboard() {
     () => ({
       all: tasks.length,
       todo: tasks.filter((t) => t.status === 'todo').length,
-      'in-progress': tasks.filter((t) => t.status === 'in-progress').length,
+      inProgress: tasks.filter((t) => t.status === 'inProgress').length,
       completed: tasks.filter((t) => t.status === 'completed').length,
     }),
     [tasks],
@@ -179,7 +179,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-blue-600">
-                  {taskCounts['in-progress']}
+                  {taskCounts['inProgress']}
                 </div>
                 <div className="text-sm text-gray-600">In Progress</div>
               </div>

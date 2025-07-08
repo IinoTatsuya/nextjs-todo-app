@@ -3,7 +3,7 @@ export interface Task {
   title: string
   description?: string
   dueDate?: Date
-  status: 'todo' | 'in-progress' | 'completed'
+  status: 'todo' | 'inProgress' | 'completed'
   createdAt: Date
   updatedAt: Date
 }
