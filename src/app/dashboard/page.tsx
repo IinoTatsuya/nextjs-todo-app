@@ -1,22 +1,30 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { getTasks } from '@/lib/task-data'
 import { filterTasks, sortTasksByDueDate } from '@/lib/task-utils'
-import { TaskCard } from '@/app/dashboard/components/TaskCard'
-import { TaskFilter } from '@/app/dashboard/components/TaskFilter'
+import { TaskCard } from '@/components/TaskCard'
+import { TaskFilter } from '@/components/TaskFilter'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Plus, Search, LayoutGrid, List } from 'lucide-react'
+import { Task } from '@/types/task'
 
 export default function Dashboard() {
   const router = useRouter()
+  const [tasks, setTasks] = useState<Task[]>([])
   const [currentFilter, setCurrentFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
-  const tasks = getTasks()
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const fetchedTasks = await getTasks()
+      setTasks(fetchedTasks)
+    }
+    fetchTasks()
+  }, [])
 
   const filteredTasks = useMemo(() => {
     let filtered = filterTasks(tasks, currentFilter)

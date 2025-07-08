@@ -53,7 +53,7 @@ export default function TaskDetailPage() {
 
   useEffect(() => {
     const fetchTask = async () => {
-      const foundTask = getTaskById(params.taskId)
+      const foundTask = await getTaskById(params.taskId)
       if (foundTask) {
         setTask(foundTask)
         setFormData({
@@ -76,7 +76,7 @@ export default function TaskDetailPage() {
 
     setIsSaving(true)
     try {
-      const updatedTask = updateTask(task.id, {
+      const updatedTask = await updateTask(task.id, {
         title: formData.title,
         description: formData.description || undefined,
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
@@ -97,7 +97,7 @@ export default function TaskDetailPage() {
   const handleDelete = async () => {
     if (!task) return
 
-    const success = deleteTask(task.id)
+    const success = await deleteTask(task.id)
     if (success) {
       router.push('/dashboard')
     }

@@ -1,97 +1,136 @@
 import { Task } from '@/types/task'
+import { generateClient } from 'aws-amplify/data'
+import { type Schema } from '@/../amplify/data/resource'
+import { Amplify } from 'aws-amplify'
+import outputs from '@/../amplify_outputs.json'
 
-// Mock data - in a real app, this would come from a database
-export const mockTasks: Task[] = [
-  {
-    id: '1',
-    title: 'Design System Implementation',
-    description:
-      'Create a comprehensive design system for the new product launch including components, tokens, and guidelines.',
-    dueDate: new Date('2025-01-15'),
-    status: 'in-progress',
-    createdAt: new Date('2025-01-01'),
-    updatedAt: new Date('2025-01-05'),
-  },
-  {
-    id: '2',
-    title: 'User Authentication Setup',
-    description:
-      'Implement secure user authentication with JWT tokens and refresh token rotation.',
-    dueDate: new Date('2025-01-20'),
-    status: 'todo',
-    createdAt: new Date('2025-01-02'),
-    updatedAt: new Date('2025-01-02'),
-  },
-  {
-    id: '3',
-    title: 'Database Migration',
-    description:
-      'Migrate legacy database to new schema with proper indexing and optimization.',
-    dueDate: new Date('2025-01-10'),
-    status: 'completed',
-    createdAt: new Date('2024-12-28'),
-    updatedAt: new Date('2025-01-08'),
-  },
-  {
-    id: '4',
-    title: 'Mobile App Testing',
-    description:
-      'Comprehensive testing of mobile application across different devices and OS versions.',
-    dueDate: new Date('2025-01-25'),
-    status: 'todo',
-    createdAt: new Date('2025-01-03'),
-    updatedAt: new Date('2025-01-03'),
-  },
-  {
-    id: '5',
-    title: 'Performance Optimization',
-    description:
-      'Optimize application performance and reduce load times by 40%.',
-    status: 'in-progress',
-    createdAt: new Date('2025-01-04'),
-    updatedAt: new Date('2025-01-06'),
-  },
-]
+Amplify.configure(outputs)
 
-// In a real app, these would be API calls
-export const getTasks = (): Task[] => mockTasks
+const client = generateClient<Schema>()
 
-export const getTaskById = (id: string): Task | undefined =>
-  mockTasks.find((task) => task.id === id)
+export const getTasks = async (): Promise<Task[]> => {
+  const { data: todos, errors } = await client.models.Todo.list()
 
-export const createTask = (
-  taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>,
-): Task => {
-  const newTask: Task = {
-    ...taskData,
-    id: Date.now().toString(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
+  if (errors) {
+    console.error('Error fetching tasks:', errors)
+    return []
   }
-  mockTasks.push(newTask)
-  return newTask
+
+  return (
+    todos?.map((todo) => ({
+      ...todo,
+      description: todo.description ?? undefined,
+      dueDate: todo.dueDate ? new Date(todo.dueDate) : undefined,
+      createdAt: new Date(todo.createdAt),
+      updatedAt: new Date(todo.updatedAt),
+      status: todo.status ?? 'todo',
+    })) || []
+  )
 }
 
-export const updateTask = (
+export const getTaskById = async (id: string): Promise<Task | undefined> => {
+  const tasks = await getTasks()
+  const task = tasks.find((task) => task.id === id)
+
+  if (!task) {
+    console.warn(`Task with id ${id} not found`)
+    return undefined
+  }
+
+  return {
+    ...task,
+    description: task.description ?? undefined,
+    dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
+    createdAt: new Date(task.createdAt),
+    updatedAt: new Date(task.updatedAt),
+    status: task.status ?? 'todo',
+  }
+}
+
+export const createTask = async (
+  taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>,
+): Promise<Task> => {
+  const { errors, data: newTodo } = await client.models.Todo.create({
+    title: taskData.title,
+    description: taskData.description || undefined,
+    dueDate: taskData.dueDate ? taskData.dueDate.toISOString() : undefined,
+    status: taskData.status,
+  })
+
+  if (errors) {
+    console.error('Error creating task:', errors)
+    throw new Error('Failed to create task')
+  }
+
+  if (!newTodo) {
+    throw new Error('Failed to create task: newTodo is null')
+  }
+
+  return {
+    id: newTodo.id,
+    title: newTodo.title,
+    description: newTodo.description || undefined,
+    dueDate: newTodo.dueDate ? new Date(newTodo.dueDate) : undefined,
+    status: newTodo.status || 'todo',
+    createdAt: new Date(newTodo.createdAt),
+    updatedAt: new Date(newTodo.updatedAt),
+  }
+}
+
+export const updateTask = async (
   id: string,
   updates: Partial<Task>,
-): Task | undefined => {
-  const taskIndex = mockTasks.findIndex((task) => task.id === id)
-  if (taskIndex === -1) return undefined
+): Promise<Task | undefined> => {
+  const { data: updatedTodo, errors } = await client.models.Todo.update({
+    id,
+    title: updates.title,
+    description: updates.description || undefined,
+    dueDate: updates.dueDate ? updates.dueDate.toISOString() : undefined,
+    status: updates.status,
+  })
 
-  mockTasks[taskIndex] = {
-    ...mockTasks[taskIndex],
-    ...updates,
-    updatedAt: new Date(),
+  if (errors) {
+    console.error('Error updating task:', errors)
+    return undefined
   }
 
-  return mockTasks[taskIndex]
+  if (!updatedTodo) {
+    console.warn(`Task with id ${id} not found for update`)
+    return undefined
+  }
+
+  return {
+    id: updatedTodo.id,
+    title: updatedTodo.title,
+    description: updatedTodo.description || undefined,
+    dueDate: updatedTodo.dueDate ? new Date(updatedTodo.dueDate) : undefined,
+    status: updatedTodo.status || 'todo',
+    createdAt: new Date(updatedTodo.createdAt),
+    updatedAt: new Date(updatedTodo.updatedAt),
+  }
 }
 
-export const deleteTask = (id: string): boolean => {
-  const taskIndex = mockTasks.findIndex((task) => task.id === id)
-  if (taskIndex === -1) return false
+export const deleteTask = async (id: string): Promise<boolean> => {
+  // 最新のデータを取得してから削除対象を確認する
+  const { data: todos, errors: listErrors } = await client.models.Todo.list()
+  if (listErrors || !todos) {
+    console.error('Error fetching tasks for deletion:', listErrors)
+    return false
+  }
 
-  mockTasks.splice(taskIndex, 1)
-  return true
+  const taskToDelete = todos.find((task) => task.id === id)
+  if (!taskToDelete) {
+    console.warn(`Task with id ${id} not found for deletion`)
+    return false
+  }
+
+  const { data: deletedTodo, errors } =
+    await client.models.Todo.delete(taskToDelete)
+
+  if (errors) {
+    console.error('Error deleting task:', errors)
+    return false
+  }
+
+  return !!deletedTodo
 }

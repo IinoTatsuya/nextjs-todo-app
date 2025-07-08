@@ -34,7 +34,7 @@ export default function NewTaskPage() {
 
     setIsCreating(true)
     try {
-      const newTask = createTask({
+      const newTask = await createTask({
         title: formData.title,
         description: formData.description || undefined,
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
