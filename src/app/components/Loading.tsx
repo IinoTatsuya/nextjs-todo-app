@@ -6,7 +6,7 @@ export default function Loading() {
           <span className="text-4xl">⏳</span>
         </div>
         <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          タスクを読み込み中...
+          読み込み中...
         </h2>
         <p className="text-gray-600">しばらくお待ちください。</p>
       </div>

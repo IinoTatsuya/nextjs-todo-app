@@ -16,10 +16,9 @@ import { cn } from '@/lib/utils'
 
 interface TaskCardProps {
   task: Task
-  onEdit: (taskId: string) => void
 }
 
-export function TaskCard({ task, onEdit }: TaskCardProps) {
+export function TaskCard({ task }: TaskCardProps) {
   const statusColor = getStatusColor(task.status)
   const statusIcon = getStatusIcon(task.status)
   const statusLabel = getStatusLabel(task.status)
@@ -81,10 +80,6 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
             <Button
               size="sm"
               variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation()
-                onEdit(task.id)
-              }}
               className="opacity-0 group-hover:opacity-100 transition-opacity"
             >
               Edit

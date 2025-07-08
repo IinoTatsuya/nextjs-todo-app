@@ -1,20 +1,21 @@
 import { useState, useMemo, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { getTasks } from '@/lib/task-data'
 import { filterTasks, sortTasksByDueDate } from '@/lib/task-utils'
 import { Task } from '@/types/task'
 
 export const useDashboard = () => {
-  const router = useRouter()
   const [tasks, setTasks] = useState<Task[]>([])
+  const [loading, setLoading] = useState(false)
   const [currentFilter, setCurrentFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   useEffect(() => {
     const fetchTasks = async () => {
+      setLoading(true)
       const fetchedTasks = await getTasks()
       setTasks(fetchedTasks)
+      setLoading(false)
     }
     fetchTasks()
   }, [])
@@ -43,16 +44,8 @@ export const useDashboard = () => {
     [tasks],
   )
 
-  const handleEditTask = (taskId: string) => {
-    router.push(`/dashboard/${taskId}`)
-  }
-
-  const handleCreateTask = () => {
-    router.push('/dashboard/new')
-  }
-
   return {
-    router,
+    loading,
     filteredTasks,
     currentFilter,
     setCurrentFilter,
@@ -61,7 +54,5 @@ export const useDashboard = () => {
     viewMode,
     setViewMode,
     taskCounts,
-    handleEditTask,
-    handleCreateTask,
   }
 }

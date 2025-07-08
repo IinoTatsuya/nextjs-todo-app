@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import MainContent from './components/MainContent'
 import { useTaskDetailPage } from './hooks/useTaskDetailPage'
-import Loading from './components/Loading'
+import Loading from '../../components/Loading'
 import NoTask from './components/NoTask'
 
 export default function TaskDetailPage() {
