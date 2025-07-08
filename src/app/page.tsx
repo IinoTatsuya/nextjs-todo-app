@@ -3,6 +3,7 @@ import FeaturesGrid from './components/FeaturesGrid'
 import ReadySection from './components/ReadySection'
 
 export default function Home() {
+  // This is the main entry point for the home page of the application.
   return (
     <div>
       <div className="max-w-6xl mx-auto px-4 py-16">
