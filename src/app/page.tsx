@@ -28,7 +28,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div>
       <div className="max-w-6xl mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">

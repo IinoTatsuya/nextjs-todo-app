@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { signOut } from 'aws-amplify/auth'
 import { getTasks } from '@/lib/task-data'
 import { filterTasks, sortTasksByDueDate } from '@/lib/task-utils'
 import { TaskCard } from '@/app/dashboard/components/TaskCard'
@@ -59,7 +60,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div>
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -72,13 +73,30 @@ export default function Dashboard() {
                 あなたのタスクを管理し、生産性を向上させるためのダッシュボードです。
               </p>
             </div>
-            <Button
-              onClick={handleCreateTask}
-              className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              New Task
-            </Button>
+            <div>
+              <Button
+                onClick={handleCreateTask}
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                New Task
+              </Button>
+              <Button
+                variant="ghost"
+                className="text-gray-500 hover:text-gray-700"
+                onClick={() => {
+                  signOut()
+                    .then(() => {
+                      router.push('/')
+                    })
+                    .catch((error) => {
+                      console.error('Sign out error:', error)
+                    })
+                }}
+              >
+                Sign Out
+              </Button>
+            </div>
           </div>
         </div>
 
