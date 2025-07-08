@@ -4,8 +4,8 @@ import { useState, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { getTasks } from '@/lib/task-data'
 import { filterTasks, sortTasksByDueDate } from '@/lib/task-utils'
-import { TaskCard } from '@/components/TaskCard'
-import { TaskFilter } from '@/components/TaskFilter'
+import { TaskCard } from '@/app/dashboard/components/TaskCard'
+import { TaskFilter } from '@/app/dashboard/components/TaskFilter'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Plus, Search, LayoutGrid, List } from 'lucide-react'
@@ -127,12 +127,12 @@ export default function Dashboard() {
                 <Search className="w-8 h-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                No tasks found
+                まだタスクはありません
               </h3>
               <p className="text-gray-600 mb-4">
                 {searchQuery
-                  ? 'Try adjusting your search terms'
-                  : 'Get started by creating your first task'}
+                  ? 'その条件に一致するタスクは見つかりませんでした'
+                  : '最初のタスクを追加しましょう！'}
               </p>
               {!searchQuery && (
                 <Button
@@ -140,7 +140,7 @@ export default function Dashboard() {
                   className="bg-blue-600 hover:bg-blue-700"
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  Create your first task
+                  タスクを追加する
                 </Button>
               )}
             </div>
