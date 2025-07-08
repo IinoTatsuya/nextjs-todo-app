@@ -8,7 +8,7 @@ const schema = a.schema({
       dueDate: a.datetime(),
       status: a.enum(['todo', 'inProgress', 'completed']),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.owner()]),
 })
 
 export type Schema = ClientSchema<typeof schema>
@@ -16,9 +16,6 @@ export type Schema = ClientSchema<typeof schema>
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'apiKey',
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    defaultAuthorizationMode: 'userPool',
   },
 })
